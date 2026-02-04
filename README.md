@@ -1,50 +1,112 @@
-# 🎨 ReDesign CSS Editor
+# 🎨 ReDesign - Spicetify CSS Editor
 
 A modern, accessible Spicetify extension providing a floating CSS editor with syntax highlighting, live preview, and an enhanced color picker with OKLCH support.
 
-## ✨ Features
+## Features
 
-- **Floating CSS Editor**: Draggable, resizable editor with syntax highlighting
-- **Live Preview**: Changes apply instantly to Spotify UI
-- **Advanced Color Picker**: ace-colorpicker with HEX, RGB, HSL; OKLCH supported in conversion; previous-color swatch and full hue slider
-- **WCAG AA Compliant**: Accessible color combinations with contrast checking
-- **Dark/Light Themes**: Automatic theme switching
-- **Keyboard Shortcuts**: F12 to toggle editor, customizable hotkeys
-- **Persistent State**: Saves CSS and settings automatically
-- **Scrollbar**: Hidden by default in the editor; appears on hover or while scrolling
+✨ **Live CSS Editing**
+- Edit your Spotify theme CSS in real-time with instant preview
+- Floating, draggable, and resizable editor window
+- Minimize/maximize functionality that follows window resizing
 
-## 🚀 Quick Start
+🎨 **Advanced Editor**
+- Syntax highlighting powered by Ace Editor
+- Auto-completion and intelligent code suggestions
+- Customizable font size and tab spacing
+- Line numbers and code folding
+- Multiple color themes for the editor
 
-### Installation
+🍭 **Advanced Color Picker**
+- ace-colorpicker with HEX, RGB, HSL
+- OKLCH supported in conversion
+- Previous-color swatch and full hue slider
+- Scrollbar Hidden by default in the color picker - appears on hover or while scrolling
 
-```bash
-cd Extension/css-editor
-npm install
-npm run deploy
-```
+⚙️ **Smart Features**
+- Auto-save option to persist changes automatically
+- Word wrap for better readability
+- Configurable hotkey to quickly open/close the editor
+- Position memory - remembers where you placed it
 
-This will:
-1. Build the extension
-2. Deploy to Spicetify
-3. Verify installation
+🎯 **Seamless Integration**
+- Native Spotify settings integration
+- Follows Spotify's design language
+- Properly aligned controls and spacing
 
-### Usage
+## Installation
 
-1. **Open Editor**: Press F12 (or your custom hotkey)
-2. **Write CSS**: Edit Spotify's UI styling
-3. **Live Preview**: Changes apply instantly
-4. **Color Picker**: Click color values to open the picker
-5. **Save**: Auto-saves to local storage
+### Via Spicetify Marketplace (Recommended)
+1. Install [Spicetify](https://spicetify.app/)
+2. Install [Spicetify Marketplace](https://github.com/spicetify/spicetify-marketplace)
+3. Search for "ReDesign" in the Extensions tab
+4. Click Install
 
-### Keyboard Shortcuts
+### Manual Installation
+1. Download the latest release from the [Releases](https://github.com/kalashnikxvxiii/spicetify-redesign/releases) page
+2. Copy `redesign.js` to your Spicetify extensions folder:
+   - Windows: `%APPDATA%\spicetify\Extensions`
+   - Linux/macOS: `~/.config/spicetify/Extensions`
+3. Run the following commands:
+   ```bash
+   spicetify config extensions redesign.js
+   spicetify apply
+   ```
+
+### Build from Source
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/kalashnikxvxiii/redesign
+   cd redesign
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Build the extension:
+   ```bash
+   npm run build
+   ```
+4. The compiled extension will be automatically placed in your Spicetify extensions folder
+5. Apply the extension:
+   ```bash
+   spicetify apply
+   ```
+
+## Usage
+
+1. **Open the Editor**: Use your configured hotkey (default: `Ctrl+Shift+E`) or access it from Spotify's settings
+2. **Edit CSS**: Type your CSS code in the editor
+3. **See Changes Live**: Changes are applied immediately as you type
+4. **Save**: Enable auto-save in settings, or your changes persist automatically
+5. **Customize**: Access settings in Spotify's settings page under "ReDesign" section
+
+## Configuration
+
+Access settings in Spotify Settings > ReDesign:
+
+- **Hotkey to open/close editor**: Customize the keyboard shortcut
+- **Editor font size**: Adjust font size for better readability
+- **Tab size**: Set the number of spaces for tabs
+- **Enable Auto-save**: Automatically save changes
+- **Show Line Numbers**: Toggle line numbers visibility
+- **Enable word wrap**: Wrap long lines for better viewing
+- **Editor color theme**: Choose from multiple color schemes
+- **Save editor position**: Remember editor position between sessions
+- **Restore default CSS**: Reset to original Spotify CSS
+
+## Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
-| F12 | Toggle editor |
-| Ctrl+S | Save CSS |
-| Ctrl+F | Find in editor |
-| ESC | Close color picker |
-| Tab | Navigate inputs |
+| `Ctrl+Shift+E` | Toggle editor (customizable) |
+| `Ctrl+S` | Save CSS (when auto-save is disabled) |
+| `Ctrl+F` | Find in editor |
+| `Ctrl+H` | Find and replace |
+| `Ctrl+/` | Toggle comment |
+| `Ctrl+Z` | Undo |
+| `Ctrl+Y` | Redo |
+
+## Development
 
 ## 📦 Project Structure
 
@@ -192,10 +254,18 @@ Contributions are welcome! Please:
 
 ## 👥 Credits
 
-- **Original Color Picker**: ace-colorpicker
-- **Enhanced by**: ReDesign Team
-- **Community**: Spicetify users
+- Original project forked from [Spotify CSS Editor](https://github.com/CharlieS1103/spicetify-css-editor)
+- Heavily modified and enhanced by me :)
+- Built for [Spicetify](https://spicetify.app/)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you encounter any issues or have suggestions, please [open an issue](https://github.com/kalashnikxvxiii/spicetify-redesign/issues) on GitHub.
 
 ---
 
-**Made with ❤️ for the Spicetify community**
+Made with ❤️ for the Spicetify community
