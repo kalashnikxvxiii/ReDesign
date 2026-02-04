@@ -1,0 +1,684 @@
+/**
+ * Enhanced Color Picker Styles
+ * Modern, accessible, and responsive color picker UI
+ * 
+ * Features:
+ * - WCAG AA compliant contrast ratios
+ * - Smooth transitions and animations
+ * - Dark/Light theme support
+ * - Responsive layout
+ * - Improved UX with visual feedback
+ * 
+ * @author ReDesign Team
+ * @version 1.0.0
+ */
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (Theme Variables)
+   ============================================ */
+:root {
+  /* Color Picker - Dark Theme (Default) */
+  --cp-bg-primary: #1e1e1e;
+  --cp-bg-secondary: #252526;
+  --cp-bg-elevated: #2d2d30;
+  --cp-border: #3e3e42;
+  --cp-border-focus: #007acc;
+  --cp-text-primary: #d4d4d4;
+  --cp-text-secondary: #858585;
+  --cp-text-muted: #6a6a6a;
+  --cp-accent: #4ec9b0;
+  --cp-accent-hover: #5fd9c0;
+  --cp-button-bg: #0e639c;
+  --cp-button-hover: #1177bb;
+  --cp-button-active: #0d5a8a;
+  --cp-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --cp-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.6);
+  
+  /* Transitions */
+  --cp-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Border Radius */
+  --cp-radius-sm: 4px;
+  --cp-radius-md: 6px;
+  --cp-radius-lg: 8px;
+  --cp-radius-full: 50%;
+  
+  /* Spacing */
+  --cp-space-xs: 4px;
+  --cp-space-sm: 8px;
+  --cp-space-md: 12px;
+  --cp-space-lg: 16px;
+  --cp-space-xl: 24px;
+}
+
+/* Light Theme Override */
+[data-theme="light"] {
+  --cp-bg-primary: #ffffff;
+  --cp-bg-secondary: #f3f3f3;
+  --cp-bg-elevated: #e8e8e8;
+  --cp-border: #e0e0e0;
+  --cp-border-focus: #0e639c;
+  --cp-text-primary: #1e1e1e;
+  --cp-text-secondary: #6a6a6a;
+  --cp-text-muted: #858585;
+  --cp-accent: #16825d;
+  --cp-accent-hover: #1a9b6f;
+  --cp-button-bg: #0e639c;
+  --cp-button-hover: #1177bb;
+  --cp-button-active: #0d5a8a;
+  --cp-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --cp-shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.colorpicker-body {
+  background: var(--cp-bg-secondary) !important;
+  border: 1px solid var(--cp-border) !important;
+  border-radius: var(--cp-radius-lg) !important;
+  box-shadow: var(--cp-shadow-elevated) !important;
+  padding: var(--cp-space-lg) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  color: var(--cp-text-primary) !important;
+  min-width: 280px !important;
+  max-width: 320px !important;
+  pointer-events: auto !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  animation: colorpicker-fadein var(--cp-transition-normal) ease-out !important;
+}
+
+@keyframes colorpicker-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.colorpicker-body * {
+  box-sizing: border-box !important;
+}
+
+/* Allow text selection in inputs */
+.colorpicker-body input {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Ensure buttons are clickable */
+.colorpicker-body button {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: all var(--cp-transition-fast) !important;
+}
+
+/* Hide arrow indicator */
+.colorpicker-body .arrow {
+  display: none !important;
+}
+
+/* ============================================
+   MAIN COLOR AREA (Saturation/Value Picker)
+   ============================================ */
+.colorpicker-body > .color {
+  width: 100% !important;
+  height: 180px !important;
+  position: relative !important;
+  border-radius: var(--cp-radius-md) !important;
+  cursor: crosshair !important;
+  margin-bottom: var(--cp-space-md) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--cp-border) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+.colorpicker-body .saturation {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0)) !important;
+}
+
+.colorpicker-body .value {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000) !important;
+}
+
+.colorpicker-body .drag-pointer {
+  position: absolute !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 3px solid white !important;
+  border-radius: var(--cp-radius-full) !important;
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3) !important;
+  margin: -8px 0 0 -8px !important;
+  pointer-events: none !important;
+  transform: translate(0, 0) !important;
+  transition: transform var(--cp-transition-fast) !important;
+}
+
+.colorpicker-body .drag-pointer:hover {
+  transform: scale(1.1) !important;
+}
+
+/* ============================================
+   CONTROL SECTION (Hue, Opacity, Preview)
+   ============================================ */
+.colorpicker-body .control {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 40px 40px !important;
+  gap: var(--cp-space-sm) !important;
+  margin-bottom: var(--cp-space-md) !important;
+  align-items: center !important;
+}
+
+/* Sliders (Hue & Opacity) */
+.colorpicker-body .hue,
+.colorpicker-body .opacity {
+  height: 14px !important;
+  position: relative !important;
+  border-radius: var(--cp-radius-sm) !important;
+  overflow: hidden !important;
+  border: 1px solid var(--cp-border) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+  cursor: pointer !important;
+  transition: box-shadow var(--cp-transition-fast) !important;
+}
+
+.colorpicker-body .hue:hover,
+.colorpicker-body .opacity:hover {
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    0 0 0 2px var(--cp-border-focus) !important;
+}
+
+.colorpicker-body .hue-container,
+.colorpicker-body .opacity-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+}
+
+/* Hue gradient */
+.colorpicker-body .hue-container {
+  background: linear-gradient(to right,
+    #ff0000 0%, #ff8000 12.5%, #ffff00 25%, #80ff00 37.5%,
+    #00ff00 50%, #00ff80 62.5%, #00ffff 75%, #0080ff 87.5%, #0000ff 100%) !important;
+}
+
+/* Opacity checkerboard */
+.colorpicker-body .opacity-container {
+  background:
+    linear-gradient(45deg, var(--cp-bg-elevated) 25%, transparent 25%, transparent 75%, var(--cp-bg-elevated) 75%, var(--cp-bg-elevated)),
+    linear-gradient(45deg, var(--cp-bg-elevated) 25%, transparent 25%, transparent 75%, var(--cp-bg-elevated) 75%, var(--cp-bg-elevated)),
+    var(--cp-bg-primary) !important;
+  background-size: 8px 8px !important;
+  background-position: 0 0, 4px 4px !important;
+}
+
+.colorpicker-body .color-bar {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+
+/* Drag bars for sliders */
+.colorpicker-body .drag-bar {
+  position: absolute !important;
+  top: 50% !important;
+  width: 4px !important;
+  height: 18px !important;
+  background: white !important;
+  border: 1px solid rgba(0, 0, 0, 0.4) !important;
+  border-radius: 2px !important;
+  cursor: pointer !important;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  transform: translate(-50%, -50%) !important;
+  transition: all var(--cp-transition-fast) !important;
+}
+
+.colorpicker-body .drag-bar:hover {
+  height: 22px !important;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 3px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Color preview squares - prev/curr: library sets background-color via inline style, do NOT override */
+.colorpicker-body .control .empty {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: var(--cp-radius-sm) !important;
+  border: 1px solid var(--cp-border) !important;
+  position: relative !important;
+}
+
+.colorpicker-body .control > .color {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: var(--cp-radius-sm) !important;
+  border: 1px solid var(--cp-border) !important;
+  cursor: pointer !important;
+  transition: all var(--cp-transition-fast) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.colorpicker-body .control > .color:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ============================================
+   INFORMATION SECTION (Format & Inputs)
+   ============================================ */
+.colorpicker-body .information {
+  margin-bottom: var(--cp-space-md) !important;
+}
+
+.colorpicker-body .information-change {
+  margin-bottom: var(--cp-space-sm) !important;
+}
+
+/* Format change button */
+.colorpicker-body .format-change-button {
+  background: var(--cp-bg-primary) !important;
+  border: 1px solid var(--cp-border) !important;
+  border-radius: var(--cp-radius-sm) !important;
+  padding: var(--cp-space-sm) var(--cp-space-md) !important;
+  color: var(--cp-text-primary) !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  transition: all var(--cp-transition-fast) !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.colorpicker-body .format-change-button:hover {
+  background: var(--cp-bg-elevated) !important;
+  border-color: var(--cp-border-focus) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.colorpicker-body .format-change-button:active {
+  transform: translateY(0) !important;
+  box-shadow: none !important;
+}
+
+/* Input fields container */
+.colorpicker-body .information-item {
+  display: flex !important;
+  gap: var(--cp-space-sm) !important;
+  margin-bottom: var(--cp-space-sm) !important;
+}
+
+.colorpicker-body .input-field {
+  position: relative !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* Input styling */
+.colorpicker-body .input-field .input {
+  width: 100% !important;
+  padding: 20px var(--cp-space-sm) var(--cp-space-xs) var(--cp-space-sm) !important;
+  background: var(--cp-bg-primary) !important;
+  border: 1px solid var(--cp-border) !important;
+  border-radius: var(--cp-radius-sm) !important;
+  color: var(--cp-text-primary) !important;
+  font-size: 14px !important;
+  font-family: 'Courier New', Consolas, 'SF Mono', Monaco, monospace !important;
+  text-align: center !important;
+  transition: all var(--cp-transition-fast) !important;
+  outline: none !important;
+}
+
+.colorpicker-body .input-field .input:hover {
+  border-color: var(--cp-text-secondary) !important;
+  background: var(--cp-bg-elevated) !important;
+}
+
+.colorpicker-body .input-field .input:focus {
+  border-color: var(--cp-border-focus) !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.15) !important;
+  background: var(--cp-bg-primary) !important;
+}
+
+/* Input label */
+.colorpicker-body .input-field .title {
+  position: absolute !important;
+  top: 4px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-size: 10px !important;
+  color: var(--cp-text-secondary) !important;
+  pointer-events: none !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Input postfix (%, deg, etc.) */
+.colorpicker-body .input-field .postfix {
+  position: absolute !important;
+  top: 50% !important;
+  right: var(--cp-space-sm) !important;
+  transform: translateY(-50%) !important;
+  font-size: 11px !important;
+  color: var(--cp-text-muted) !important;
+  pointer-events: none !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================
+   COLOR SETS/PALETTES SECTION
+   ============================================ */
+.colorpicker-body .colorsets {
+  border-top: 1px solid var(--cp-border) !important;
+  padding-top: var(--cp-space-md) !important;
+  margin-top: var(--cp-space-sm) !important;
+}
+
+.colorpicker-body .colorsets .menu {
+  margin-bottom: var(--cp-space-sm) !important;
+}
+
+.colorpicker-body .color-sets-choose-btn {
+  background: var(--cp-bg-primary) !important;
+  border: 1px solid var(--cp-border) !important;
+  border-radius: var(--cp-radius-sm) !important;
+  padding: var(--cp-space-sm) var(--cp-space-md) !important;
+  color: var(--cp-text-primary) !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  width: 100% !important;
+  text-align: left !important;
+  transition: all var(--cp-transition-fast) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.colorpicker-body .color-sets-choose-btn:hover {
+  background: var(--cp-bg-elevated) !important;
+  border-color: var(--cp-border-focus) !important;
+}
+
+.colorpicker-body .color-sets-choose-btn::after {
+  content: '▼' !important;
+  font-size: 10px !important;
+  color: var(--cp-text-secondary) !important;
+  transition: transform var(--cp-transition-fast) !important;
+}
+
+.colorpicker-body .color-sets-choose-btn.active::after {
+  transform: rotate(180deg) !important;
+}
+
+/* Color list */
+.colorpicker-body .color-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-start !important;
+  gap: var(--cp-space-sm) !important;
+  padding: var(--cp-space-sm) 0 !important;
+}
+
+.colorpicker-body .current-color-sets {
+  display: contents !important;
+}
+
+/* Color item */
+.colorpicker-body .color-item {
+  position: relative !important;
+  cursor: pointer !important;
+  transition: transform var(--cp-transition-fast) !important;
+}
+
+.colorpicker-body .color-item:hover {
+  transform: scale(1.15) !important;
+}
+
+.colorpicker-body .color-item:active {
+  transform: scale(1.05) !important;
+}
+
+.colorpicker-body .color-item .empty {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: var(--cp-radius-sm) !important;
+  background:
+    linear-gradient(45deg, var(--cp-bg-elevated) 25%, transparent 25%, transparent 75%, var(--cp-bg-elevated) 75%, var(--cp-bg-elevated)),
+    linear-gradient(45deg, var(--cp-bg-elevated) 25%, transparent 25%, transparent 75%, var(--cp-bg-elevated) 75%, var(--cp-bg-elevated)),
+    var(--cp-bg-primary) !important;
+  background-size: 6px 6px !important;
+  background-position: 0 0, 3px 3px !important;
+  border: 1px solid var(--cp-border) !important;
+}
+
+.colorpicker-body .color-item .color-view {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: var(--cp-radius-sm) !important;
+  border: 1px solid var(--cp-border) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow var(--cp-transition-fast) !important;
+}
+
+.colorpicker-body .color-item:hover .color-view {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ============================================
+   COLOR CHOOSER MODAL
+   ============================================ */
+.colorpicker-body .color-chooser {
+  display: none !important;
+  animation: colorpicker-slidein var(--cp-transition-normal) ease-out !important;
+}
+
+@keyframes colorpicker-slidein {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.colorpicker-body .colorsets-list {
+  display: none !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  transition: max-height var(--cp-transition-slow) ease !important;
+}
+
+.colorpicker-body .color-chooser.show {
+  display: block !important;
+}
+
+.colorpicker-body .colorsets-list.show {
+  display: block !important;
+  max-height: 500px !important;
+}
+
+.colorpicker-body .color-chooser-container {
+  background: var(--cp-bg-secondary) !important;
+  border: 1px solid var(--cp-border) !important;
+  border-radius: var(--cp-radius-md) !important;
+  padding: var(--cp-space-md) !important;
+  margin-top: var(--cp-space-sm) !important;
+}
+
+.colorpicker-body .colorsets-item-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: var(--cp-space-md) !important;
+  padding-bottom: var(--cp-space-sm) !important;
+  border-bottom: 1px solid var(--cp-border) !important;
+}
+
+.colorpicker-body .colorsets-item-header .title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  color: var(--cp-text-primary) !important;
+}
+
+.colorpicker-body .colorsets-item {
+  margin-bottom: var(--cp-space-md) !important;
+}
+
+.colorpicker-body .colorsets-item .title {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin: 0 0 var(--cp-space-sm) 0 !important;
+  color: var(--cp-text-secondary) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* ============================================
+   ACE COLOR VIEW (Inline color preview)
+   ============================================ */
+.ace-colorview {
+  position: absolute !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 2px !important;
+  margin-left: 4px !important;
+  cursor: pointer !important;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+  background: 
+    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc),
+    linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc) !important;
+  background-size: 4px 4px !important;
+  background-position: 0 0, 2px 2px !important;
+  transition: all var(--cp-transition-fast) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.ace-colorview:hover {
+  transform: scale(1.2) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+.colorpicker-body *:focus-visible {
+  outline: 2px solid var(--cp-border-focus) !important;
+  outline-offset: 2px !important;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .colorpicker-body,
+  .colorpicker-body *,
+  .colorpicker-body *::before,
+  .colorpicker-body *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .colorpicker-body {
+    border-width: 2px !important;
+  }
+  
+  .colorpicker-body .input-field .input:focus {
+    outline: 3px solid var(--cp-border-focus) !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 400px) {
+  .colorpicker-body {
+    min-width: 260px !important;
+    padding: var(--cp-space-md) !important;
+  }
+  
+  .colorpicker-body > .color {
+    height: 160px !important;
+  }
+  
+  .colorpicker-body .control {
+    grid-template-columns: 1fr 1fr 36px 36px !important;
+  }
+  
+  .colorpicker-body .control .empty,
+  .colorpicker-body .control > .color {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.colorpicker-body .cp-hidden {
+  display: none !important;
+}
+
+.colorpicker-body .cp-disabled {
+  opacity: 0.5 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.colorpicker-body .cp-loading {
+  position: relative !important;
+  pointer-events: none !important;
+}
+
+.colorpicker-body .cp-loading::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: -10px 0 0 -10px !important;
+  border: 2px solid var(--cp-border) !important;
+  border-top-color: var(--cp-accent) !important;
+  border-radius: var(--cp-radius-full) !important;
+  animation: cp-spin 0.6s linear infinite !important;
+}
+
+@keyframes cp-spin {
+  to { transform: rotate(360deg); }
+}

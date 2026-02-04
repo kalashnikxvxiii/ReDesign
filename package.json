@@ -1,7 +1,7 @@
 {
   "name": "spicetify-redesign",
   "version": "1.0.0",
-  "description": "A Spicetify extension that provides a floating CSS editor with syntax highlighting, live preview, and advanced editing features",
+  "description": "A Spicetify extension that provides a floating CSS editor with syntax highlighting, live preview, advanced editing features, and enhanced color picker with OKLCH support",
   "author": "kalashnikxvxiii",
   "repository": {
     "type": "git",
@@ -13,11 +13,22 @@
     "css",
     "editor",
     "customization",
-    "theme"
+    "theme",
+    "color-picker",
+    "oklch",
+    "accessibility",
+    "wcag"
   ],
   "scripts": {
-    "build": "node build.mjs",
-    "watch": "node build.mjs --watch"
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "test": "node scripts/test.js",
+    "deploy": "node scripts/deploy.js",
+    "deploy:quick": "npm run build && node scripts/deploy.js --skip-tests",
+    "verify": "node scripts/verify.js",
+    "pretest": "echo Running pre-test checks...",
+    "postbuild": "node scripts/verify.js",
+    "postdeploy": "echo Deployment complete! Restart Spotify to see changes."
   },
   "license": "MIT",
   "devDependencies": {

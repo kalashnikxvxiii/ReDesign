@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import styles from "./settings.module.css";
 import {
@@ -9,6 +9,7 @@ import {
   ISettingsFieldToggle,
   NewValueTypes,
 } from "./types/settings-field";
+import type { DropdownOptions } from "./types/settings-field";
 
 class SettingsSection {
   settingsFields: { [nameId: string]: ISettingsField } =
@@ -151,16 +152,20 @@ class SettingsSection {
   addDropDown = (
     nameId: string,
     description: string,
-    options: string[],
-    defaultIndex: number,
+    options: DropdownOptions,
+    defaultIndexOrValue: number | string,
     onSelect?: () => void,
     events?: ISettingsFieldDropdown["events"]
   ) => {
+    const defaultValue =
+      typeof options === "function"
+        ? (defaultIndexOrValue as string)
+        : options[defaultIndexOrValue as number];
     this.settingsFields[nameId] = {
       type: "dropdown",
       description: description,
-      defaultValue: options[defaultIndex],
-      options: options,
+      defaultValue,
+      options,
       events: {
         onSelect: onSelect,
         ...events,
@@ -224,6 +229,25 @@ class SettingsSection {
       }
     };
 
+    const dropdownOptions =
+      props.field.type === "dropdown"
+        ? typeof (props.field as ISettingsFieldDropdown).options === "function"
+          ? (props.field as ISettingsFieldDropdown).options(
+              this.getFieldValue.bind(this)
+            )
+          : (props.field as ISettingsFieldDropdown).options
+        : [];
+    useEffect(() => {
+      if (
+        props.field.type === "dropdown" &&
+        dropdownOptions.length > 0 &&
+        value !== undefined &&
+        !dropdownOptions.includes(value as string)
+      ) {
+        setValue(dropdownOptions[0]);
+      }
+    }, [props.field.type, props.nameId, value, dropdownOptions.join(",")]);
+
     return (
       <div className="x-settings-row">
         <div className="x-settings-firstColumn">
@@ -286,29 +310,34 @@ class SettingsSection {
               </span>
             </label>
           ) : props.field.type === "dropdown" ? (
-            <select
-              className="main-dropDown-dropDown"
-              id={id}
-              {...props.field.events}
-              onChange={(e) => {
-                setValue(
-                  (props.field as ISettingsFieldDropdown).options[
-                    e.currentTarget.selectedIndex
-                  ]
-                );
-                const onChange = (props.field as ISettingsFieldDropdown).events
-                  ?.onChange;
-                if (onChange) onChange(e);
-              }}
-            >
-              {props.field.options.map((option, i) => {
-                return (
-                  <option selected={option === value} value={i + 1}>
-                    {option}
-                  </option>
-                );
-              })}
-            </select>
+            (() => {
+              const dropdownField = props.field as ISettingsFieldDropdown;
+              return (
+                <select
+                  className="main-dropDown-dropDown"
+                  id={id}
+                  {...dropdownField.events}
+                  value={
+                    dropdownOptions.includes(value as string)
+                      ? (value as string)
+                      : dropdownOptions[0]
+                  }
+                  onChange={(e) => {
+                    const newVal =
+                      dropdownOptions[e.currentTarget.selectedIndex];
+                    setValue(newVal);
+                    const onSelect = dropdownField.events?.onSelect;
+                    if (onSelect) (onSelect as any)(e);
+                  }}
+                >
+                  {dropdownOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              );
+            })()
           ) : (
             <></>
           )}

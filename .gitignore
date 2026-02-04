@@ -155,3 +155,8 @@ Thumbs.db
 
 # Build output (extension is built directly to Spicetify folder)
 dist/
+
+# Local development
+.qodo/
+*.bak
+*.tmp

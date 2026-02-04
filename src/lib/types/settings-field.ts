@@ -10,11 +10,13 @@ export interface ISettingsFieldInput {
     events?: Partial<React.InputHTMLAttributes<HTMLInputElement>>,
 }
 
+export type DropdownOptions = string[] | ((getFieldValue: (id: string) => any) => string[]);
+
 export interface ISettingsFieldDropdown {
     type: "dropdown",
     description?: string,
     defaultValue: string,
-    options: string[],
+    options: DropdownOptions,
     events?: Partial<React.SelectHTMLAttributes<HTMLSelectElement>>,
 }
 
