@@ -142,21 +142,27 @@ out
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
-# IDE
+# IDE / Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
+ehthumbs.db
 
 # Build output (extension is built directly to Spicetify folder)
 dist/
 
-# Local development
+# Local / temporary
 .qodo/
 *.bak
 *.tmp
