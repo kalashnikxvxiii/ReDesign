@@ -866,7 +866,7 @@ class CSSEditorIframe extends React.Component<ICSSEditorProps, ICSSEditorStates>
       max-width: 300px !important;
       height: auto !important;
       min-height: 0 !important;
-      max-height: 85vh !important;
+      max-height: 65vh !important;
       overflow-x: hidden !important;
       overflow-y: auto !important;
       pointer-events: auto !important;

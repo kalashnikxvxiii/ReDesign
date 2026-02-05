@@ -76,6 +76,13 @@ try {
   const stats = fs.statSync(outFile);
   const sizeKB = (stats.size / 1024).toFixed(2);
   console.log(`   Size: ${sizeKB} KB`);
+
+  // Copy to dist/ for Spicetify Marketplace (manifest.json main entry)
+  const distDir = path.join(projectRoot, 'dist');
+  const marketplaceOut = path.join(distDir, 'extension.js');
+  if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
+  fs.copyFileSync(outFile, marketplaceOut);
+  console.log(`   Marketplace: ${marketplaceOut}`);
 } catch (error) {
   console.error('❌ Build failed:', error);
   process.exit(1);

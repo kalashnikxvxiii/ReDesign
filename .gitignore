@@ -161,6 +161,8 @@ ehthumbs.db
 
 # Build output (extension is built directly to Spicetify folder)
 dist/
+# Allow dist/extension.js for Spicetify Marketplace
+!dist/extension.js
 
 # Local / temporary
 .qodo/

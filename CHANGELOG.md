@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hue slider: gradient in `.colorpicker-body .hue-container` now covers full 0-360° HSL spectrum
 - Editor scrollbar: hidden by default; shown when hovering near edge or while scrolling (`.scrollbar-visible`, `.is-scrolling`)
 
+### Added
+- `manifest.json` and `preview.png` for [Spicetify Marketplace](https://github.com/spicetify/marketplace/wiki/Publishing-to-Marketplace); build outputs `dist/extension.js` for marketplace distribution
+
 ### Changed
 - Editor palette options are filtered by UI theme: 18 dark palettes for Dark theme, 18 light palettes for Light theme; switching UI theme validates/resets editor palette and reloads the iframe
 - Settings: dropdown options can be a function of `getFieldValue` (see `src/lib/types/settings-field.ts` and `src/lib/settingsSection.tsx`)

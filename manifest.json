@@ -1,0 +1,21 @@
+{
+  "name": "ReDesign CSS Editor",
+  "description": "CSS editor with syntax highlighting, live preview, enhanced color picker (HEX, RGB, HSL, OKLCH), dark/light themes and palettes.",
+  "preview": "preview.png",
+  "main": "dist/extension.js",
+  "readme": "README.md",
+  "authors": [
+    {
+      "name": "kalashnikxvxiii",
+      "url": "https://github.com/kalashnikxvxiii"
+    }
+  ],
+  "tags": [
+    "css",
+    "editor",
+    "color-picker",
+    "customization",
+    "accessibility",
+    "themes"
+  ]
+}

@@ -14,6 +14,8 @@
 ├── CONTRIBUTING.md            # Contribution guidelines
 ├── LICENSE                    # MIT License
 ├── README.md                  # Project overview and quick start
+├── manifest.json              # Spicetify Marketplace manifest
+├── preview.png                # Marketplace preview image
 ├── package.json               # NPM dependencies and scripts
 ├── package-lock.json          # Locked dependency versions
 ├── tsconfig.json              # TypeScript configuration

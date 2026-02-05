@@ -80,6 +80,8 @@ Documentation Files:
 ├── CONTRIBUTING.md                    # Contribution guidelines
 ├── CHANGELOG.md                       # Version history
 ├── DOCUMENTATION_INDEX.md             # This file
+├── manifest.json                      # Spicetify Marketplace manifest
+├── preview.png                        # Marketplace preview image
 └── docs/
     ├── README.md                      # Documentation index
     ├── DEVELOPMENT.md                 # Development guide
