@@ -33,6 +33,8 @@ A modern, accessible Spicetify extension providing a floating CSS editor with sy
 - Follows Spotify's design language
 - Properly aligned controls and spacing
 
+<img width="1006" height="702" alt="preview" src="https://github.com/user-attachments/assets/7c5252a7-6754-44e3-9015-54e2549e5249" />
+
 ## Installation
 
 ### Via Spicetify Marketplace (Recommended)
